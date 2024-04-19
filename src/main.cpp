@@ -123,8 +123,9 @@ int main(int argc, char* argv[])
         }
     }
     catch (std::exception& err) {
-        std::cerr << "ERROR: invalid input: " << err.what() << std::endl;
-        std::cerr << "Arguments were:" << std::endl;
+        std::cerr << "ERROR: an exception occured during the program execution: " 
+                  << err.what() << std::endl;
+        std::cerr << "Command line arguments were:" << std::endl;
         for (const auto& str : str_args) {
             std::cerr << str << std::endl;
         }

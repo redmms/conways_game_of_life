@@ -26,4 +26,4 @@ target_link_libraries(console_game_of_life PRIVATE ${SDL2_LIBRARIES})
 
 get_target_property(SDL_SHARED_LIB SDL2::SDL2 IMPORTED_LOCATION)
 
-file(COPY ${SDL_SHARED_LIB} DESTINATION ${CMAKE_BINARY_DIR})
+add_custom_command(TARGET console_game_of_life POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy ${SDL_SHARED_LIB} $<TARGET_FILE_DIR:console_game_of_life>)
