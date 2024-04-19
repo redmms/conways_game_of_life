@@ -28,6 +28,7 @@ cmake --build .
 ```
 cd "Path to .exe file"
 ```
+7) Add sdl2.dll to the folder with .exe file
 ## Run
 After building run next command (on Windows):
 ```
