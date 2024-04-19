@@ -9,5 +9,5 @@ namespace mmd {
         }
     };
 
-    void LogError(int error_code);
+    void LogError(bool error);
 }

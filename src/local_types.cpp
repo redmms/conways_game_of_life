@@ -3,8 +3,8 @@
 #include <iostream>
 
 namespace mmd {
-    void LogError(int error_code) {
-        if (error_code) {
+    void LogError(bool error) {
+        if (error) {
             std::cerr << SDL_GetError() << std::endl;
         }
     }

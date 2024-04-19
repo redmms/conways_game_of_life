@@ -67,7 +67,8 @@ namespace mmd
         else {
             LogError(SDL_SetRenderDrawColor(&renderer, 0, 0, 0, 255));
         }
-        SDL_Rect foreground_rect{ xy.x * cell_size + 1, xy.y * cell_size + 1, cell_size1, cell_size1 };
+        SDL_Rect foreground_rect{ xy.x * cell_size + 1, xy.y * cell_size + 1, 
+            cell_size1, cell_size1 };
         LogError(SDL_RenderFillRect(&renderer, &foreground_rect));
     }
 
@@ -105,7 +106,7 @@ namespace mmd
         if (!ValidCoord(xy)) {
             throw std::out_of_range("Board::SetColor coord argument is invalid");
         }
-        current_gen[xy.x][xy.y] = color;
+        current_gen[xy.x][xy.y] = static_cast<uint8_t>(color);
     }
 
     bool Board::ValidCoord(coord xy) const

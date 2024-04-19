@@ -7,8 +7,8 @@ namespace mmd
 {
     MainWindow::MainWindow(int width_, int height_, int cell_size_) :
         cell_size(cell_size_),
-        width((width_ / cell_size)* cell_size),
-        height((height_ / cell_size)* cell_size),
+        width(width_ - (width_ % cell_size)),
+        height(height_ - (height_ % cell_size)),
         window(nullptr, &SDL_DestroyWindow),
         renderer(nullptr, &SDL_DestroyRenderer),
         background(nullptr, &SDL_DestroyTexture),
@@ -24,12 +24,12 @@ namespace mmd
         ));
         if (!window) {
             throw std::runtime_error("In MainWindow constructor: couldn't"
-                " couldn't initialize window");
+                " initialize window");
         }
         renderer.reset(SDL_CreateRenderer(window.get(), -1, 0));
         if (!renderer) {
             throw std::runtime_error("In MainWindow constructor: couldn't"
-                " couldn't initialize renderer");
+                " initialize renderer");
         }
         background.reset(SDL_CreateTexture(
             renderer.get(),
@@ -40,7 +40,7 @@ namespace mmd
         ));
         if (!background) {
             throw std::runtime_error("In MainWindow constructor: couldn't"
-                " couldn't initialize background");
+                " initialize background");
         }
         foreground.reset(SDL_CreateTexture(
             renderer.get(),
@@ -51,11 +51,33 @@ namespace mmd
         ));
         if (!foreground) {
             throw std::runtime_error("In MainWindow constructor: couldn't"
-                " couldn't initialize foreground");
+                " initialize foreground");
         }
         LogError(SDL_SetTextureBlendMode(foreground.get(), SDL_BLENDMODE_BLEND));
         DrawLines();
         Update(*background);
+    }
+
+    void MainWindow::DrawLines()
+    {
+        LogError(SDL_SetRenderTarget(renderer.get(), background.get()));
+        LogError(SDL_SetRenderDrawColor(renderer.get(), 100, 100, 100, 255));
+        for (int x = cell_size; x < width; x += cell_size) {
+            LogError(SDL_RenderDrawLine(renderer.get(), x, 0, x, height));
+        }
+        for (int y = cell_size; y < height; y += cell_size) {
+            LogError(SDL_RenderDrawLine(renderer.get(), 0, y, width, y));
+        }
+    }
+
+    void MainWindow::SwitchTitle(bool pause_mode)
+    {
+        if (pause_mode) {
+            SDL_SetWindowTitle(window.get(), "Conway's game of life: Pause");
+        }
+        else {
+            SDL_SetWindowTitle(window.get(), "Conway's game of life: Running");
+        }
     }
 
     void MainWindow::Update(SDL_Texture& layer)
@@ -88,27 +110,5 @@ namespace mmd
     int MainWindow::CellSize() const
     {
         return cell_size;
-    }
-
-    void MainWindow::DrawLines()
-    {
-        LogError(SDL_SetRenderTarget(renderer.get(), background.get()));
-        LogError(SDL_SetRenderDrawColor(renderer.get(), 100, 100, 100, 255));
-        for (int x = cell_size; x < width; x += cell_size) {
-            LogError(SDL_RenderDrawLine(renderer.get(), x, 0, x, height));
-        }
-        for (int y = cell_size; y < height; y += cell_size) {
-            LogError(SDL_RenderDrawLine(renderer.get(), 0, y, width, y));
-        }
-    }
-
-    void MainWindow::SwitchTitle(bool pause_mode)
-    {
-        if (pause_mode) {
-            SDL_SetWindowTitle(window.get(), "Conway's game of life: Pause");
-        }
-        else {
-            SDL_SetWindowTitle(window.get(), "Conway's game of life: Running");
-        }
     }
 }

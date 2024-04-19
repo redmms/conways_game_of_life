@@ -23,7 +23,7 @@ namespace mmd
         int CellSize() const;
         SDL_Texture& Foreground();
         SDL_Renderer& Renderer();
-        void DrawLines();
         void SwitchTitle(bool pause_mode);
+        void DrawLines();
     };
 }

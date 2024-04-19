@@ -83,16 +83,16 @@ int main(int argc, char* argv[])
 
         mmd::MainWindow window(window_width, window_height, cell_size);
         mmd::Board board(window);
-        uint64_t delta = 2000 - speed * 200;
+        uint32_t delta = 2000 - speed * 200;
         bool pause_mode = true;
         bool main_loop = true;
-        SDL_AddTimer(static_cast<uint32_t>(delta),
+        mmd::LogError(!SDL_AddTimer(delta,
             [](uint32_t interval, void*) {
                 SDL_Event event{ .type = SDL_USEREVENT };
                 mmd::LogError(!SDL_PushEvent(&event));
                 return interval;
             },
-            nullptr);
+            nullptr));
         while (main_loop) {
             SDL_Event event;
             if (!SDL_WaitEvent(&event)) {
@@ -112,7 +112,8 @@ int main(int argc, char* argv[])
                     board.Clear();
                 }
                 else if (event.type == SDL_MOUSEBUTTONDOWN) {
-                    board.ToggleCell({ event.button.x / cell_size, event.button.y / cell_size });
+                    board.ToggleCell({ event.button.x / cell_size, 
+                        event.button.y / cell_size });
                 }
             }
             else if (!pause_mode) {
