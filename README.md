@@ -13,7 +13,8 @@ cd "Path to the build folder"
 ```
 cmake ../src 
 ```  
-or you can opt for a C++ compiler like so instead, MSVC and MinGW compilers will work for sure:  
+or you can opt for a C++ compiler like so instead, MSVC compiler will work for sure,
+with MinGW compiler you may need to add paths to libstdc++-6.dll and libgcc_s_seh-1.dll to your PATH environment variable:  
 ```  
 cmake ../src -DCMAKE_CXX_COMPILER="Path to your compiler"
 ``` 
