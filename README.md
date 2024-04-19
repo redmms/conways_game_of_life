@@ -33,8 +33,10 @@ cd "Path to .exe file"
 - MSVC/SDL2-2.30.2/lib/x86  
   
 ## Run
-After building, run the next command (on Windows):
-start console_game_of_life.exe 7 700 500 
+After building, run the next command (on Windows):  
+```
+start console_game_of_life.exe 7 700 500  
+```  
 where 7 is the speed of the game from 1 to 10,
 700 is the window width from 100 and is a multiple of 10,
 500 is the window height from 100 and is a multiple of 10 You will see such a window:

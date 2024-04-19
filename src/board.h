@@ -19,8 +19,6 @@ namespace mmd {
 
         int CountNeighbours(coord mid, bool color) const;
         bool ValidCoord(coord xy) const;
-        bool GetColor(coord xy) const;
-        void SetColor(coord xy, bool color);
 
     public:
         Board(MainWindow& window);
@@ -29,5 +27,7 @@ namespace mmd {
         void ToggleCell(coord xy);
         void Clear();
         void DrawCell(coord xy, bool color);
+        bool GetColor(coord xy) const;
+        void SetColor(coord xy, bool color);
     };
 }
